@@ -1,18 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  class Role extends sequelize.Sequelize.Models{};
+  class Role extends sequelize.Sequelize.Model{};
   Role.init({
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Name cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Name cannot be null'
-        }
+        notEmpty : true
       }
     }
   }, {
@@ -20,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Role'
   });
   Role.associate = function(models) {
-    Role.hasMany(models.User);
+    Role.hasOne(models.User);
   };
   return Role;
 };

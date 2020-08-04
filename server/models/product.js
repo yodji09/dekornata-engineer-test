@@ -1,81 +1,40 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  class Product extends sequelize.Sequelize.Models{};
+  class Product extends sequelize.Sequelize.Model{};
   Product.init({
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Name cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Name cannot be null'
-        }
+        notEmpty : true
       }
     },
     image_url: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Image url cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Image url cannot be null'
-        }
+        notEmpty : true
       }
     },
     price: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Price cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Price cannot be null'
-        },
-        min: {
-          args: 0,
-          message: 'Price must greater than 0'
-        }
+        notEmpty : true,
+        min: 0
       }
     },
     stock: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Stock cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Stock cannot be null'
-        },
-        min: {
-          args: 0,
-          message: 'Stock must greater than 0'
-        }
+        notEmpty : true,
+        min: 0
       }
     },
-    categoryId: {
+    CategoryId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Category id cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Category id cannot be null'
-        }
+        notEmpty : true,
       },
-      refferences: {
-        models: 'Categories',
+      references: {
+        model: 'Categories',
         key: 'id'
       },
       onUpdate: 'cascade',

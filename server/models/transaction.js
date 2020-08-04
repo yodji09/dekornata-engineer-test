@@ -1,40 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  class Transaction extends sequelize.Sequelize.Models{};
+  class Transaction extends sequelize.Sequelize.Model{};
   Transaction.init({
-    userId: {
+    UserId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'User id cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'User id cannot be null'
-        }
+        notEmpty : true
       },
-      refferences: {
-        models: 'Users',
+      references: {
+        model: 'Users',
         key: 'id'
       },
       onDelete: 'cascade',
       onUpdate: 'cascade'
     },
-    productId: {
+    ProductId: {
       type: DataTypes.INTEGER,
       validate: {
-        notEmpty : {
-          args: true,
-          message: 'Product id cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Product id cannot be null'
-        }
+        notEmpty : true
       },
-      refferences: {
-        models: 'Products',
+      references: {
+        model: 'Products',
         key: 'id'
       },
       onDelete: 'cascade',
@@ -49,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: (transaction) => {
         transaction.status = false
         transaction.quantity = 1
+        transaction.price = 1
       },
     },
     modelName: 'Transaction'

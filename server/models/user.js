@@ -6,55 +6,25 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type : DataTypes.STRING,
       validate : {
-        notEmpty : {
-          args: true,
-          message: 'Name cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Name cannot be null'
-        }
+        notEmpty : true
       }
     },
     email: {
       type : DataTypes.STRING,
-      unique : {
-        args: true,
-        message: 'Email already used'
-      },
+      unique : true,
       validate : {
-        notEmpty : {
-          args: true,
-          message: 'Email cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Email cannot be null'
-        },
-        isEmail : {
-          args: true,
-          message: 'Please enter a valid email'
-        }
+        notEmpty : true,
+        isEmail : true
       }
     },
     password: {
       type : DataTypes.STRING,
       validate : {
-        notEmpty : {
-          args: true,
-          message: 'Password cannot be empty'
-        },
-        notNull: {
-          args: true,
-          message: 'Password cannot be null'
-        },
-        len : {
-          args: [8, 30],
-          message: 'Password must be min 8 at length and max 30'
-        }
+        notEmpty : true,
+        len : [8, 30]
       }
     },
-    roleId: {
+    RoleId: {
       type : DataTypes.INTEGER,
       references : {
         model : "Roles",
@@ -65,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     money: {
       type: DataTypes.INTEGER,
+      validate: {
+        min: 0
+      }
     }
   }, {
     sequelize,

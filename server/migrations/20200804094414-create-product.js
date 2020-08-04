@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      categoryId: {
+      CategoryId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refferences: {

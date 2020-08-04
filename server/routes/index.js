@@ -1,6 +1,5 @@
 "use strict";
 const router = require('express').Router();
-
 const userRouter = require('./users.js');
 const productRouter = require('./products.js');
 const categoryRouter = require('./categories.js');
@@ -11,4 +10,4 @@ router.use('/products', productRouter);
 router.use('/categories', categoryRouter);
 router.use('/transactions', transactionRouter);
 
-modules.export = router;
+module.exports = router;

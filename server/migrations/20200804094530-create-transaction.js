@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      UserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refferences: {
@@ -18,7 +18,7 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade'
       },
-      productId: {
+      ProductId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         refferences: {

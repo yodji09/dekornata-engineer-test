@@ -1,88 +1,92 @@
 "use strict";
 const {Category, Product} = require('../models');
 
-class ControllerCategory {
-    static findAll(req, res, next){
-        Category
-            .findAll({
-                include : Product
-            })
-            .then(category => {
-                res.status(200).json({
-                    Category : category
-                });
-            })
-            .then(err => {
-                return next(err);
-            });
+class ControllerCategories {
+  static findAll = async(req, res, next) => {
+    try {
+      const categories = await Category.findAll({
+          include : Product
+      });
+      if(categories) {
+        res.status(200).json({
+          Categories : categories
+        });
+      };
+    } catch (error) {
+      return next(error);
+    };
+  }
+
+  static findOne = async (req, res, next) => {
+    try {
+      const categories = await Category.findByPk(req.params.id, {
+        include : Product
+      });
+      if (categories) {
+        res.status(200).json({
+          Categories : categories
+        });
+      };
+    } catch (error) {
+      return next(error);
     }
-    static findOne(req, res, next){
-        Category
-            .findByPk(req.params.id, {
-                include : Product
-            })
-            .then(category => {
-                res.status(200).json({
-                    Category : category
-                });
-            })
-            .catch(err => {
-                return next(err);
-            });
+  }
+
+  static create = async(req, res, next) => {
+    try {
+      const {name} = req.body;
+      const value = {name};
+      const categories = await Category.create(value, {
+        include: Product
+      });
+      if(categories) {
+        res.status(201).json({
+            Categories : categories
+        });
+      };
+    } catch (error) {
+      return next(error);
     }
-    static create(req, res, next){
-        const {name} = req.body;
-        const value = {name};
-        Category
-            .create(value, {
-              include: Product
-            })
-            .then(category => {
-                res.status(201).json({
-                    Category : category
-                });
-            })
-            .catch(err => {
-                return next(err);
-            });
+  }
+
+  static editData = async(req, res, next) => {
+    try {
+      const {id} = req.params;
+      const {name} = req.body;
+      const value = {name};
+      let categories = await Category.update(value, {
+        where : {
+          id
+        }
+      });
+      if (categories) {
+        categories = await Category.findByPk(id, {
+          include: Product
+        });
+        if(categories) {
+          res.status(202).json({
+              Categories : categories
+          });
+        };
+      };
+    } catch (error) {
+      return next(error);
     }
-    static editData(req, res, next){
-        const {id} = req.params;
-        const {name} = req.body;
-        const value = {name};
-        Category
-            .update(value, {
-                where : {
-                    id
-                }
-            })
-            .then(category => {
-                return Category.findByPk(id, {
-                  include: Product
-                });
-            })
-            .then(category => {
-                res.status(202).json({
-                    Category : category
-                });
-            })
-            .catch(err => {
-                return next(err);
-            });
+  }
+
+  static deleteData = async(req, res, next) => {
+    try {
+      const {id} = req.params;
+      const result = await Category.destroy({where : {id}})
+      if(result) {
+        res.status(202).json({
+          message : `Succes destroy category with id ${id}`
+        });
+      }
+    } catch (error) {
+      return next(error);
     }
-    static deleteData(req, res, next){
-        const {id} = req.params;
-        Category
-            .destroy({where : {id}})
-            .then(()=> {
-                res.status(202).json({
-                    message : `Succes destroy category with id ${id}`
-                });
-            })
-            .catch(err => {
-                return next(err);
-            });
-    }
+  }
 }
 
-module.exports = ControllerCategory;
+module.exports = ControllerCategories;
